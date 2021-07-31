@@ -1,5 +1,5 @@
 <?php 
-
+echo"hello world";
 include("template.php");
 require 'connexion.php';
 $msg = '';
