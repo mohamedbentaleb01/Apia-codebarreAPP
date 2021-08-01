@@ -8,9 +8,11 @@
 
     $num_row = mysqli_num_rows($result);
 
-         
-
     $arrayBarcodes=array();
+
+    
+
+    
 ?>
 
 <html>
@@ -223,13 +225,14 @@
     <?php
     while($row=mysqli_fetch_row($result)):
       $arrayBarcodes[]=(string)$row[4];
+
     ?>
   </thead>
   <tbody class="" style="background-color: white;">
     <tr>
       <th scope="row" style="color:green;"><?php echo $row[0]?></th>
       <td width="30%"><?php $imageURL ='uploads/'.$row[8];?><a href="<?=$imageURL?>"><img style="width:40%; position:relative; margin:5px; border-radius:30px;"alt="" src="<?php echo $imageURL; ?>"/></a></td>
-      <td width="10%" class="text-muted"><b><?php echo $row[1]?></b></td>
+      <td width="10%" class="text-muted"><b><?php echo $row[1];?></b></td>
       <td width="20%"><b><?php echo $row[2]?><b></td>
       <td width="10%" class="text-muted"><b style="color:darkseagreen"><?php echo $row[3]?>&nbsp</b>Unités</td>
       <td width="20%"><svg style="width:150px;" id='<?php echo "barcode".$row[4]?>'></svg></td>

@@ -221,16 +221,24 @@ while($row = $result->fetch_assoc()){
   	
   	<form method="POST" action="" enctype="multipart/form-data">
      
+    <?php
+    $query2 = "SELECT * FROM categories";
+
+    $result = $conn->query($query2);
+    
+    ?>
     <div class="form-group">
       <label for="" style="color:#017115; font-family:'Titillium Web', sans-serif; font-size:18px;"><b>Catégories:</b></label>
       <select class="form-select" aria-label="Default select example" name="categorie" id="categorie" required>
-        <option selected disabled value="" ><?php echo $categorie;?></option>
-        <option>Alimentaire</option>
-        <option>Huiles cosmétiques</option>
-        <option>Soins visage</option>
-        <option>Soins capilaire</option>
-        <option>Rituels hammam</option>
-        <option>Gels Hydroalcooliques</option>
+        <?php
+        if ($result->num_rows > 0){
+        echo '<option value="'.$categorie.'" selected="" disabled>'.$categorie.'</option>';
+          while ($row = $result->fetch_assoc()) {
+          echo '<option value="'.$row['categorie'].'">'.$row['categorie'].'</option>';
+          }
+        }
+
+        ?>
       </select>
     </div><br>
     

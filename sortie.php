@@ -3,7 +3,46 @@
 include("template.php");
 require 'connexion.php';
 $msg = '';
+
+$query = "SELECT * FROM categories";
+$result = $conn->query($query);
+
 ?>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    // Country dependent ajax
+    $('#categorie').on('change', function(){
+        var id = $(this).val();
+        if(id){
+            $.ajax({
+                type:'POST',
+                url:'data.php',
+                data:'categorie='+id,
+                success:function(html){
+                    $('#produits').html(html);
+        }
+      });
+    };
+  });
+});  
+</script>
+
+<script>
+      // var url = "genereretiquette.php";
+      var id = "";  
+      // var display=$("#produit option:selected").text();
+      $(document).ready(function(){
+          $('#produits').change(function(){
+              //  alert($(this).val());
+              id = $(this).val();
+              $("#barcode").val(id);
+              //  window.location.href = url+'?&'+value;
+          });
+      });
+</script>
+ 
 <form  method="GET" action="">
 <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" 
                         style="border-radius: 20px; 
@@ -64,15 +103,6 @@ $msg = '';
 
 
 
-
-
-
-
-
-
-
-
-
 <button name="Action2" style="border-radius: 20px;
                         
                         color: #FFFFFF;
@@ -97,31 +127,26 @@ $msg = '';
 <br><br><br><br><br><br><br>
 <?php 
 
-
-
 if(isset($_GET["submit"]) && !empty($_GET["pack"]) && !empty($_GET["qte_prod"]) && !empty($_GET["datesortie"])){
 
   $nompack = $_GET["pack"];
   $qte = $_GET["qte_prod"];
   $datesortie = $_GET["datesortie"];
 
-  // $insert = "INSERT INTO pack (nom, qte, datesortie) VALUES ('$nompack','$qte','$datesortie')";
-  
-  // $sql = mysqli_query($conn, "SELECT * From produit");
-
   echo'<input type="hidden" name="pack" value='.$nompack.'/>';
   echo'<input type="hidden" name="qte_prod" value='.$qte.'/>';
   echo'<input type="hidden" name="datesortie" value='.$datesortie.'/>';
+  
+  echo'<center><h4><b>Ajouter les produits et valider</b></h4></center>';
 
-
-      echo"<table width=50px>";
+      echo"<table width=50%>";
           echo"<thead  style=background-color:darkseagreen;>";
               echo"<tr> 
               
               <th scope=col>Catégories</th>
               <th scope=col>Nom de produit</th>
               <th scope=col>Qté</th> 
-              <th scope=col>Code-barre</th>
+              <th scope=col>Code de produit</th>
               ";
               echo"</thead>";
 
@@ -131,47 +156,31 @@ if(isset($_GET["submit"]) && !empty($_GET["pack"]) && !empty($_GET["qte_prod"]) 
     
     echo"<tr>".
         "<td width=20% style=background-color:white>
-        <select class=form-select name=categorie id=categorie required>
-          <option selected disabled>Selectionner un produit</option>
-          <option>Alimentaire</option>
-          <option>Huiles cosmétiques</option>
-          <option>Soins visage</option>
-          <option>Soins capilaire</option>
-          <option>Rituels hammam</option>
-          <option>Gels Hydroalcooliques</option>
-        </select><button type='submit' name='submit2'>submit</button></td>";
-
-        if(isset($_GET['submit2']) && !empty($_GET['categorie'])){
-          
-          $searchvalue = $_GET['categorie'];
-          
-
-          $sqlsearch =  mysqli_query($conn, "SELECT * FROM produit WHERE categorie = '$searchvalue'");
-        }
+          <select class=form-select name='categorie' id='categorie' required>
+          <option selected disabled>----Selectionner la catégorie----</option>";
+          if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+            echo '<option id="'.$row['categorie'].'" value="'.$row['categorie'].'"><b>'.$row['id'].'</b>&nbsp&nbsp&nbsp'.$row['categorie'].'</option>';
+            }
+            }else{
+            echo '<option value="">not available</option>';
+            } 
+    echo "</select></td>";
 
 
         echo"<td width=30% style=background-color:white>
-        <select class=form-select name=''  required>
-        <option selected= disabled>Selectionner un produit</option>";
+        <select class=form-select name='produits' id='produits'  required>
+        <option value=''></option>";
 
-          while($row = mysqli_fetch_array($sqlsearch))
-
-            {
-              
-                
-                echo "<option value='". $row['code'] ."'>". $row['nom']."</option>";  
-              
-            }	
-       echo"</select>
-        </td>".
-
-        
-        "<td width=10%; style=background-color:white;><input type='number' name=''/></td>".
-        "<td style=background-color:white>'$searchvalue'</td>";
+       echo"</select></td>".
+        "<td width=10%; style=background-color:white;><input type='number' name='qte' placeholder='Qte'/></td>".
+        "<td width=10%; style=background-color:white;color:green;><b><input id='barcode' name='barcode' placeholder='code-barre relative' readonly=/></b></td>";
     echo "</tr>"; 
+    echo"</tbody>";
  
   }
-  echo"</tbody>";
+
+  
 echo"</table>"; 
 echo"</form>";
 }

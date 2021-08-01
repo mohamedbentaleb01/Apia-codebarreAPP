@@ -3,7 +3,7 @@
 
 $connection=mysqli_connect('localhost:3306','root','','apia');
 
- if(isset($_POST['submit']) && !empty($_FILES["file"]["name"])){
+ if(isset($_POST['submit']) && !empty($_FILES["file"]["name"]) && !empty($_POST['categorie'])){
 
 
   
@@ -34,7 +34,7 @@ $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
 	
 
 	$sql="INSERT INTO produit ( categorie, nom, qte, description , dateentree, datesortie,file_name, uploaded_on) VALUES ('$categorie','$nom','$quantite','$description', '$date',NULL,'".$fileName."','$date')";
-
+				
 	$result=mysqli_query($connection,$sql);
 
 	//get the last id
@@ -53,7 +53,12 @@ $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
     echo "<div align=center style=color:green;>
    Ajouter avec succée 
     </div>";
+		
 				sleep(1);
+				// if (!$result) {
+				// 	printf("Error: %s\n", mysqli_error($conn));
+				// 	exit();
+				// }
 							
 				header("Location:status.php?status=success");
 		} else {

@@ -190,6 +190,13 @@ require "connexion.php";
     </style>
 
 <body>
+  <?php 
+
+  $sql = "SELECT * FROM categories";
+
+  $result = $conn->query($sql);
+
+  ?>
 
 <div class="container">
 
@@ -206,12 +213,15 @@ require "connexion.php";
     <div class="form-group">
       <label for="" style="color:#017115; font-family:'Titillium Web', sans-serif; font-size:18px;"><b>Catégories:</b></label>
       <select class="form-select" aria-label="Default select example" name="categorie" required>
-        <option>Alimentaire</option>
-        <option>Huiles cosmétiques</option>
-        <option>Soins visage</option>
-        <option>Soins capilaire</option>
-        <option>Rituels hammam</option>
-        <option>Gels Hydroalcooliques</option>
+      <?php
+      if ($result->num_rows > 0){
+      echo '<option selected="" disabled>----Selectionner une catégories----</option>';
+        while ($row = $result->fetch_assoc()) {
+        echo '<option value="'.$row['categorie'].'">'.$row['categorie'].'</option>';
+        }
+      }
+
+      ?>
       </select>
     </div><br>
     
