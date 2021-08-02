@@ -162,7 +162,6 @@ if(isset($_GET["submit"]) && !empty($_GET["pack"]) && !empty($_GET["qte_prod"]) 
               <th scope=col>Nom de produit</th>
               <th scope=col>Qté <br><span style=color:red>(ne doit pas dépassé la qté en stock)</span></th> 
               <th scope=col>Quantité en stock</th>
-              <th scope=col>Supprimer une ligne</th>
               ";
               echo"</thead>";
   
@@ -192,7 +191,7 @@ if(isset($_GET["submit"]) && !empty($_GET["pack"]) && !empty($_GET["qte_prod"]) 
        echo"</select></td>";
         echo"<td width=10%; style=background-color:white;color:blue;><b><input type=number id='cmdqte' name='cmdqte' min='1' max='' placeholder='qte à commander' required='required'/></b></td>";
         echo "<td width=10%; style=background-color:white;color:green;><b><input id='barcode' name='barcode' placeholder='disponibilité en stock' readonly=/></b></td>";
-        echo"<td width=1%; style=background-color:white>&nbsp&nbsp&nbsp&nbsp<button type='button' onclick='deleteRow(this);'><i class='far fa-trash-alt'></i></button></td>";
+        
       
         echo "</tr>"; 
     echo"</tbody>";
@@ -233,17 +232,6 @@ else{
 
   }
 
-</script>
-<script>
-function deleteRow(button) {
-  if(confirm("Etes-vous sure de supprimer cette ligne ?")){
-    button.parentElement.parentElement.remove();
-    return true;
-  }else{
-    return false;
-  }
-    // first parentElement will be td and second will be tr.
-}
 </script>
 
 

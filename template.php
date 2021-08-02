@@ -162,14 +162,6 @@ require 'session.php';
       margin-bottom: -1px;
     }
 
-        body {
-      background-image:url('.png');
-      background-repeat: no-repeat;
-      background-size: 100%;
-      
-      backdrop-filter: blur(20px);
-      
-    }
 
     
 .button span:after {
