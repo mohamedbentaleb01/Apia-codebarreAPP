@@ -22,11 +22,13 @@ $result = $conn->query($query);
                 data:'categorie='+id,
                 success:function(html){
                     $('#produits').html(html);
+                    
         }
       });
     };
   });
-});  
+});
+
 </script>
 
 <script>
@@ -38,11 +40,24 @@ $result = $conn->query($query);
               //  alert($(this).val());
               id = $(this).val();
               $("#barcode").val(id);
+              // $("#qte_prod").val(qte);
+              //  window.location.href = url+'?&'+value;
+          });
+      });
+
+      var code = "";  
+      // var display=$("#produit option:selected").text();
+      $(document).ready(function(){
+          $('#produits').change(function(){
+              //  alert($(this).val());
+              code = $(this).find('option:selected').attr('id');
+              $("#code_barre").val(code);
+              // $("#qte_prod").val(qte);
               //  window.location.href = url+'?&'+value;
           });
       });
 </script>
- 
+
 <form  method="GET" action="">
 <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" 
                         style="border-radius: 20px; 
@@ -85,7 +100,7 @@ $result = $conn->query($query);
           </div>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label" style="color: #017115;"><b>Qté de produit :</b></label>
-            <input type="number" class="form-control" placeholder="Qté" name="qte_prod" id="">
+            <input type="number" class="form-control" placeholder="Qté" name="qte_prod" min="0" max='25' id="qte_prod">
           </div>
           <div class="mb-2">
             <label for="recipient-name" class="col-form-label" style="color: #017115;"><b>Date de sortie :</b></label>
@@ -99,7 +114,6 @@ $result = $conn->query($query);
     </div>
   </div>
 </div>
-
 
 
 
@@ -139,75 +153,98 @@ if(isset($_GET["submit"]) && !empty($_GET["pack"]) && !empty($_GET["qte_prod"]) 
   
   echo'<center><h4><b>Ajouter les produits et valider</b></h4></center>';
 
-      echo"<table width=50%>";
+      echo"<table width=50% id=''>";
           echo"<thead  style=background-color:darkseagreen;>";
               echo"<tr> 
-              
+              <th scope=col>Produits n°</th>
+              <th scope=col>Code relative</th>
               <th scope=col>Catégories</th>
               <th scope=col>Nom de produit</th>
-              <th scope=col>Qté</th> 
-              <th scope=col>Code de produit</th>
+              <th scope=col>Qté <br><span style=color:red>(ne doit pas dépassé la qté en stock)</span></th> 
+              <th scope=col>Quantité en stock</th>
+              <th scope=col>Supprimer une ligne</th>
               ";
               echo"</thead>";
-
-  for($i=1;$i<=$qte;$i++){
-
+  
+  for($i=1; $i<=$qte; $i++){
     echo"</tbody style=background-color:white> ";
     
-    echo"<tr>".
-        "<td width=20% style=background-color:white>
+    echo"<tr><td style=background-color:white;color:darkseagreen; width=3%><center><b>".$i."</b></center></td>";
+    echo"<td width=10%; style=background-color:white;color:green;><b>
+        <input id='code_barre' name='code_barre' placeholder='Code relative' readonly=/></b></td>";
+    echo "<td width=20% style=background-color:white >
           <select class=form-select name='categorie' id='categorie' required>
-          <option selected disabled>----Selectionner la catégorie----</option>";
+          <option selected disabled>-----------Catégories-----------</option>";  
           if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
+            while ($row = mysqli_fetch_array($result))
+            {
+            
             echo '<option id="'.$row['categorie'].'" value="'.$row['categorie'].'"><b>'.$row['id'].'</b>&nbsp&nbsp&nbsp'.$row['categorie'].'</option>';
             }
-            }else{
-            echo '<option value="">not available</option>';
-            } 
-    echo "</select></td>";
+          }
+          mysqli_data_seek($result, 0);
+        echo "</select></td>";
 
-
-        echo"<td width=30% style=background-color:white>
+        echo"<td width=22% style=background-color:white>
         <select class=form-select name='produits' id='produits'  required>
-        <option value=''></option>";
-
-       echo"</select></td>".
-        "<td width=10%; style=background-color:white;><input type='number' name='qte' placeholder='Qte'/></td>".
-        "<td width=10%; style=background-color:white;color:green;><b><input id='barcode' name='barcode' placeholder='code-barre relative' readonly=/></b></td>";
-    echo "</tr>"; 
+        <option value=''>----Selectionner une catégorie----</option>";
+        
+       echo"</select></td>";
+        echo"<td width=10%; style=background-color:white;color:blue;><b><input type=number id='cmdqte' name='cmdqte' min='1' max='' placeholder='qte à commander' required='required'/></b></td>";
+        echo "<td width=10%; style=background-color:white;color:green;><b><input id='barcode' name='barcode' placeholder='disponibilité en stock' readonly=/></b></td>";
+        echo"<td width=1%; style=background-color:white>&nbsp&nbsp&nbsp&nbsp<button type='button' onclick='deleteRow(this);'><i class='far fa-trash-alt'></i></button></td>";
+      
+        echo "</tr>"; 
     echo"</tbody>";
+
  
+    
   }
 
   
-echo"</table>"; 
-echo"</form>";
+echo"</table><br><br>"; 
+echo '<center><button type="submit" name="submit" onclick="return valider()" class="btn btn-success">Valider</button><center>';
 }
-else{
-  
-// echo"<b ><p align=center style=color:red;background-color:white;margin-left:35%;margin-right:42%;>Veuillez renseignier tous les champs!</p></b>";
-  
+else{  
 }
-
-
-
 
 
 ?>
 
 
+<script>
+      $(document).ready(function(){
+        $('#produits').change(function(){
+          qte = $(this).val();
+          var input = document.getElementById("cmdqte");
+          input.setAttribute("max", qte);
+        });
+      });
+</script>
 
+<script language="javascript">
+  function valider(){
+    if(confirm("Etes-vous sure de ces choix ?")){
+      windows.location.href='#valider';
+      return true;
+    }else{
+      return false;
+    }
 
+  }
 
-
-
-
-
-
-
-
-
+</script>
+<script>
+function deleteRow(button) {
+  if(confirm("Etes-vous sure de supprimer cette ligne ?")){
+    button.parentElement.parentElement.remove();
+    return true;
+  }else{
+    return false;
+  }
+    // first parentElement will be td and second will be tr.
+}
+</script>
 
 
 </form>

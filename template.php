@@ -163,7 +163,7 @@ require 'session.php';
     }
 
         body {
-      background-image:url('img.png');
+      background-image:url('.png');
       background-repeat: no-repeat;
       background-size: 100%;
       

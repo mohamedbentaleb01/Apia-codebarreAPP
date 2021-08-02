@@ -10,14 +10,16 @@ if (isset($_POST['categorie']) && !empty($_POST['categorie'])) {
   $result = $conn->query($query);
   
   if ($result->num_rows > 0) {
-  echo '<option value="" selected="" disabled>Selectionner un produit</option>';
+  echo '<option value="" selected="" disabled>Selectionner un produit de "'.$categorie.'"</option>';
+  
   while ($row = $result->fetch_assoc()) {
-  echo '<option value="'.$row['code'].'">'.$row['nom'].'</option>';
+  echo '<option id="'.$row['code'].'" value="'.$row['qte'].'">'.$row['nom'].'</option>';
+ 
   }
-  } 
 }
+  
 else {
   echo '<option value="">not available</option>';
-  }
-
+} 
+}
 ?>
