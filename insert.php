@@ -30,10 +30,16 @@ $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
 	$date=date("Y-n-j G:i:s");
 	$description=$_POST['description'];
 
+	$querycat = "SELECT id FROM categories WHERE categorie = '$categorie'";
+	$result1 = mysqli_query($connection, $querycat);
+
+	while($row1 = mysqli_fetch_row($result1)){
+
+		$catid = $row1[0];
+	}
 
 	
-
-	$sql="INSERT INTO produit ( categorie, nom, qte, description , dateentree, datesortie,file_name, uploaded_on) VALUES ('$categorie','$nom','$quantite','$description', '$date',NULL,'".$fileName."','$date')";
+	 $sql="INSERT INTO produit ( categorie, nom, qte, description , dateentree, datesortie,file_name, uploaded_on) VALUES ('$categorie' ,'$nom','$quantite','$description', '$date',NULL,'".$fileName."','$date')";
 				
 	$result=mysqli_query($connection,$sql);
 
@@ -41,7 +47,7 @@ $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
 	  $id=mysqli_insert_id($connection);
 
 	// //Combine id with current minute and second
-	  $code=$id.date('is');
+	  $code=$catid.$id.date('is');
 
 	  $sql="UPDATE produit SET code='$code' WHERE produit_id='$id'";
 
@@ -59,8 +65,7 @@ $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
 				// 	printf("Error: %s\n", mysqli_error($conn));
 				// 	exit();
 				// }
-							
-				header("Location:status.php?status=success");
+				 header("Location:status.php?status=success");
 		} else {
 				
       echo "<div align=center style=color:red;>

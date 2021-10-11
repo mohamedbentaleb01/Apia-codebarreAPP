@@ -1,6 +1,7 @@
 <html>
 
 <head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
   <title>BarcodeApp-PFE</title>
@@ -74,6 +75,7 @@
             }
           }
           ?>
+          
           <form class="col s12" action="" method="post" name="login">
             <div class='row'>
               <div class='col s12'>
@@ -99,8 +101,19 @@
 
             <?php if (! empty($message)) { ?>
                 <p class="errorMessage" style="color:red;"><?php echo $message; ?></p>
+                
                 <?php } ?>
             <br />
+            <?php 
+            if(!isset($_SESSION["username"]) && !empty($_GET["status"])){
+                if($_GET["status"] == "destroyed"){
+                  $msgsession = '<strong>Cette session est expirer ! </strong> Veuillez se reconnecter.';
+                }
+            }
+            ?>
+            <?php if (! empty($msgsession)) {?>
+              <p class="errorMessage" style="color:red;"><?php echo $msgsession; ?></p>
+            <?php } ?>
             <center>
               <div class='row'>
                 <button type='submit' name="submit" class='col s12 btn btn-large waves-effect green'>Connexion</button>
@@ -120,6 +133,7 @@
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 </body>
 
 </html>

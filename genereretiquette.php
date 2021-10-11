@@ -204,7 +204,7 @@ $sql = mysqli_query($conn, "SELECT * From produit");
 <div class="container">
   <fieldset class="" style="background-color: white; position:relative; width:100% ; top:108px ; margin:auto;" align="center" >
 
-    <h3 style="font-family:'Titillium Web', sans-serif;"><b>Génerer une etiquette</b></h3><hr>
+    <h3 style="font-family:'Titillium Web', sans-serif;"><img src="price-tag.png" style="width:4%;" alt=""/>&nbsp&nbsp<b>Génerer une etiquette</b></h3><hr>
     
     <input type="hidden" name="status" value="barcode" id="barcode"/>
 

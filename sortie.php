@@ -1,66 +1,36 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <?php 
 
 include("template.php");
 require 'connexion.php';
-$msg = '';
+echo '<br><br><br>';
+if(isset($_SESSION['msg'])){
+  echo $_SESSION['msg'];
+  unset($_SESSION['msg']);
+}
+if(isset($_SESSION['msg2'])){
+echo $_SESSION['msg2'];
+unset($_SESSION['msg2']);
+}
 
-$query = "SELECT * FROM categories";
-$result = $conn->query($query);
+
+$displaypack = "SELECT * FROM pack WHERE code IS NOT NULL ORDER BY date DESC";
+$resultpack = mysqli_query($conn, $displaypack);
+
+$arrayBarcodes=array();
+
+
+
 
 ?>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
-  $(document).ready(function(){
-    // Country dependent ajax
-    $('#categorie').on('change', function(){
-        var id = $(this).val();
-        if(id){
-            $.ajax({
-                type:'POST',
-                url:'data.php',
-                data:'categorie='+id,
-                success:function(html){
-                    $('#produits').html(html);
-                    
-        }
-      });
-    };
-  });
-});
-
-</script>
-
-<script>
-      // var url = "genereretiquette.php";
-      var id = "";  
-      // var display=$("#produit option:selected").text();
-      $(document).ready(function(){
-          $('#produits').change(function(){
-              //  alert($(this).val());
-              id = $(this).val();
-              $("#barcode").val(id);
-              // $("#qte_prod").val(qte);
-              //  window.location.href = url+'?&'+value;
-          });
-      });
-
-      var code = "";  
-      // var display=$("#produit option:selected").text();
-      $(document).ready(function(){
-          $('#produits').change(function(){
-              //  alert($(this).val());
-              code = $(this).find('option:selected').attr('id');
-              $("#code_barre").val(code);
-              // $("#qte_prod").val(qte);
-              //  window.location.href = url+'?&'+value;
-          });
-      });
-</script>
 
 <form  method="GET" action="">
 <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" 
-                        style="border-radius: 20px; 
+                        style="border-radius: 10px; 
+                        border : none;
                         color: #FFFFFF;
                         font-size: 22px;
                         padding: 20px;
@@ -69,14 +39,14 @@ $result = $conn->query($query);
                         cursor: pointer;
                         margin: 5px;
                         background:url('packages.jpg');background-repeat:no-repeat; background-size:350px 136px;
-                        position:relative; height:140px; width:320px; left:610px; top:100px;" 
+                        position:relative; height:140px; width:320px; left:30px; top:200px;" 
                   >
                   <span style="cursor: pointer;
                                 display: inline-block;
                                 position: relative;
                                 transition: 0.5s;
                                 
-                                color: white"><i class="fas fa-cube"></i> <b>Pack de produits <p class="text-muted">(Differents catégories)</p></b></span>
+                                color: white"><i class="fas fa-cube"></i> <b>Ajouter un pack de produit </b></span>
                 
 </button>
 
@@ -96,15 +66,15 @@ $result = $conn->query($query);
       </div>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label" style="color: #017115;"><b>Nom du pack :</b></label>
-            <input type="text" class="form-control" placeholder="Nom de pack" name="pack" id="">
+            <input type="text" class="form-control" placeholder="Nom de pack" name="pack" id="" required>
           </div>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label" style="color: #017115;"><b>Qté de produit :</b></label>
-            <input type="number" class="form-control" placeholder="Qté" name="qte_prod" min="0" max='25' id="qte_prod">
+            <input type="number" class="form-control" placeholder="Qté" name="qte_prod" min="1" max='25' id="qte_prod" required>
           </div>
           <div class="mb-2">
             <label for="recipient-name" class="col-form-label" style="color: #017115;"><b>Date de sortie :</b></label>
-            <input type="date" class="form-control" placeholder="Qté" name="datesortie" id="">
+            <input type="date" class="form-control" placeholder="Qté" name="datesortie" id="" required>
           </div>
           
       <div class="modal-footer">
@@ -115,10 +85,24 @@ $result = $conn->query($query);
   </div>
 </div>
 
+<style>
+  .modal {  
+    width: 10%;
+    background-color: grey;
+}
+.modal-dialog {  
+    height: 75%;
+    left: 0%;
+    width: 35%;
+    bottom: 15%;
+    border-radius: 5px;
+}
+</style>
 
 
-<button name="Action2" style="border-radius: 20px;
-                        
+
+<button name="Action2" style="border-radius: 10px;
+                        border : none;
                         color: #FFFFFF;
                         font-size: 22px;
                         padding: 20px;
@@ -127,18 +111,17 @@ $result = $conn->query($query);
                         cursor: pointer;
                         margin: 5px;
                         background:url('package.jpg');background-repeat:no-repeat; background-size:320px 138px;
-                        position:relative; height:140px; width:320px; left:-80px; top:100px;" 
+                        position:relative; height:140px; width:320px; left:-300px; top:22px;" 
                   class="button" onclick="window.location.href=''">
                   <span style="cursor: pointer;
                                 display: inline-block;
                                 position: relative;
                                 transition: 0.5s;
                                 
-                                color: white"><i class="fas fa-cubes"></i> <b>Pack de produits <p class="text-muted">( Une seule catégorie)</p></b></span>
+                                color: white"><i class="fas fa-cubes"></i> <b>Afficher les packs </b></span>
                 
-</button><br>
+</button>
 
-<br><br><br><br><br><br><br>
 <?php 
 
 if(isset($_GET["submit"]) && !empty($_GET["pack"]) && !empty($_GET["qte_prod"]) && !empty($_GET["datesortie"])){
@@ -147,84 +130,98 @@ if(isset($_GET["submit"]) && !empty($_GET["pack"]) && !empty($_GET["qte_prod"]) 
   $qte = $_GET["qte_prod"];
   $datesortie = $_GET["datesortie"];
 
-  echo'<input type="hidden" name="pack" value='.$nompack.'/>';
-  echo'<input type="hidden" name="qte_prod" value='.$qte.'/>';
-  echo'<input type="hidden" name="datesortie" value='.$datesortie.'/>';
-  
-  echo'<center><h4><b>Ajouter les produits et valider</b></h4></center>';
+  echo '<script> location.replace("sortie2.php?qte='.$qte.'&&pack='.$nompack.'&&dtsort='.$datesortie.'"); </script>';
 
-      echo"<table width=50% id=''>";
-          echo"<thead  style=background-color:darkseagreen;>";
-              echo"<tr> 
-              <th scope=col>Produits n°</th>
-              <th scope=col>Code relative</th>
-              <th scope=col>Catégories</th>
-              <th scope=col>Nom de produit</th>
-              <th scope=col>Qté <br><span style=color:red>(ne doit pas dépassé la qté en stock)</span></th> 
-              <th scope=col>Quantité en stock</th>
-              ";
-              echo"</thead>";
-  
-  for($i=1; $i<=$qte; $i++){
-    echo"</tbody style=background-color:white> ";
-    
-    echo"<tr><td style=background-color:white;color:darkseagreen; width=3%><center><b>".$i."</b></center></td>";
-    echo"<td width=10%; style=background-color:white;color:green;><b>
-        <input id='code_barre' name='code_barre' placeholder='Code relative' readonly=/></b></td>";
-    echo "<td width=20% style=background-color:white >
-          <select class=form-select name='categorie' id='categorie' required>
-          <option selected disabled>-----------Catégories-----------</option>";  
-          if ($result->num_rows > 0) {
-            while ($row = mysqli_fetch_array($result))
-            {
-            
-            echo '<option id="'.$row['categorie'].'" value="'.$row['categorie'].'"><b>'.$row['id'].'</b>&nbsp&nbsp&nbsp'.$row['categorie'].'</option>';
-            }
-          }
-          mysqli_data_seek($result, 0);
-        echo "</select></td>";
-
-        echo"<td width=22% style=background-color:white>
-        <select class=form-select name='produits' id='produits'  required>
-        <option value=''>----Selectionner une catégorie----</option>";
-        
-       echo"</select></td>";
-        echo"<td width=10%; style=background-color:white;color:blue;><b><input type=number id='cmdqte' name='cmdqte' min='1' max='' placeholder='qte à commander' required='required'/></b></td>";
-        echo "<td width=10%; style=background-color:white;color:green;><b><input id='barcode' name='barcode' placeholder='disponibilité en stock' readonly=/></b></td>";
-        
-      
-        echo "</tr>"; 
-    echo"</tbody>";
-
- 
-    
-  }
-
-  
-echo"</table><br><br>"; 
-echo '<center><button type="submit" name="submit" onclick="return valider()" class="btn btn-success">Valider</button><center>';
+}else {
+  echo'<script> location.replace("sortie.php?status=refused); </script>';
 }
-else{  
-}
-
-
 ?>
 
 
-<script>
-      $(document).ready(function(){
-        $('#produits').change(function(){
-          qte = $(this).val();
-          var input = document.getElementById("cmdqte");
-          input.setAttribute("max", qte);
-        });
-      });
-</script>
+
+<div class="card" style="margin-left:38%;margin-right:5%;background-color:white;position:absolute;top:150px;">
+<div class="card-header" style="background-color:#017115;color:white;font-size:20px;text-align:center;">
+    <b><u><i class="fas fa-th-list"></i>&nbspListe des packs<u></b>
+  </div>
+  
+  <?php
+      while($row=mysqli_fetch_row($resultpack)):
+        $idpack = $row[0];
+        $nompack = $row[1];
+        $arrayBarcodes[]=(string)$row[2];
+        $qte_prod = $row[3];
+        $date = $row[4];
+        $addeddate = $row[5];
+  ?>
+  
+<center>
+<div class="card mb" style="max-width: 800px; border-radius:2px;">
+
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="https://img.icons8.com/color/480/000000/cydia.png"alt="" style="margin:50px;" width="50%">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+      <div class="etat" style="float:right;">
+          <?php 
+            $datenow = date("Y-m-d H:i:s");
+            if ($datenow <= $date){
+               echo '<span class="badge badge-warning" style="color:white;">En cours de livraison !</span>'; 
+            }else{
+              echo '<span class="badge badge-success" style="color:white;">Livré !</span>';
+            }
+          ?>
+        </div>
+        <a href='packdetail.php?id=<?=$idpack?>' style="color:black;"><h4 align="left" class="card-title"><?php echo $nompack;?></h4></a>
+        <p class="text-muted"><?php echo 'Ce pack est composé de : <b>'.$qte_prod.'</b>&nbspProduit(s)';?></p>
+        <p class="card-text">
+          <details style="float:left;color:green;">
+          <summary>Voir produits</summary><br><b>
+        <?php 
+        $displayitems = "SELECT * FROM produit_commande WHERE id_pack =". $idpack;
+        $resultitems =  mysqli_query($conn, $displayitems);
+      while($row1 = mysqli_fetch_row($resultitems)):
+        $nomitem = $row1[2];
+        $qteitem = $row1[5];
+        
+        echo $qteitem.'&nbsp&nbsp&nbsp'.$nomitem.'<br>';
+       
+        endwhile;
+       ?>
+       <br>
+         </b>
+        </details>
+        </p><br><br>
+        <div  style="float:right;">
+    <?php 
+    if ($datenow <= $date){
+      echo'
+     <a href="#"><i class="fas fa-trash-alt" style="color:grey;float:right;" onclick="return Delete();"></i></a>
+     <a href="#"><i class="fas fa-edit" style="color:grey;float:right; margin-right:30px; onclick="return Modifier();""></i></a>';
+    }
+    ?>
+    <hr>
+    <p class="card-text"><small class="text-muted">Ajouté le : <?php echo $addeddate; ?></small></p>
+      </div><br/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php 
+      endwhile;
+    ?>
+</div><br>
+
+
+
+</form>
 
 <script language="javascript">
-  function valider(){
-    if(confirm("Etes-vous sure de ces choix ?")){
-      windows.location.href='#valider';
+  function Delete(id){
+    if(confirm("Voulez-vous supprimer ce pack ?")){
+      windows.location.href='.php?id=' +id+'';
       return true;
     }else{
       return false;
@@ -234,5 +231,6 @@ else{
 
 </script>
 
-
-</form>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

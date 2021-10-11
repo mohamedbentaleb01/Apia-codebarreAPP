@@ -204,7 +204,7 @@ require "connexion.php";
   <div style="margin: 24%; position:absolute; top: -90px; left: -30px; right: 30px; position:fixed; ">
 <!-- <div class="header-title" style="position:relative;top:90px; font-family:'Titillium Web', sans-serif;"><h2 align="center"><b>Ajouter un produit :<b></h2></div> -->
   
-   <h3 class="text-center" style="font-family:'Titillium Web', sans-serif;" align="center"><b>Ajouter un produit</b></h3> 
+   <h3 class="text-center" style="font-family:'Titillium Web', sans-serif;" align="center"><img src="add-folder.png" style="width:5%" alt=""/>&nbsp<b>Ajouter un produit</b></h3> 
   
   <fieldset class="" style="background-color: #f7f7f7; width:100%;  "><br>
   	

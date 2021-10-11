@@ -6,6 +6,7 @@ require 'session.php';
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/a1c525c940.js" crossorigin="anonymous"></script>
+    <script src="JsBarcode.all.min.js"></script>
     <title>Apia</title>
     <link rel="shortcut icon" type="image/" href="images/back.png"/>
   <div>
@@ -218,3 +219,30 @@ button:hover {
  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script> 
 </body> 
 </html>
+<script type="text/javascript">
+  //convert json to JS array data.
+  function arrayjsonbarcode(j) {
+    json = JSON.parse(j);
+    arr = [];
+    for (var x in json) {
+      arr.push(json[x]);
+    }
+    return arr;
+  }
+
+  //convert PHP array to json data.
+  jsonvalue = '<?php echo json_encode($arrayBarcodes) ?>';
+  values = arrayjsonbarcode(jsonvalue);
+
+  //generate barcodes using values data.
+  for (var i = 0; i < values.length; i++) {
+    JsBarcode("#barcode" + values[i], values[i].toString(), {
+      format: "codabar",
+      lineColor: "#000",
+      width: 2,
+      height: 30,
+      displayValue: true
+      }
+    );
+  }
+</script>

@@ -14,6 +14,8 @@ while($row = $result->fetch_assoc()){
   $categorie = $row["categorie"];
   $nom = $row["nom"];
   $qte = $row["qte"];
+  $code = $row["code"];
+  $datecreate = $row["dateentree"];
   $desc = $row["description"];
   $imageURL = 'uploads/'.$row["file_name"];
   
@@ -310,7 +312,18 @@ $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
   $desc = $_POST['description'];
   $quantite = $_POST['quantite'];
 
-$updateq = "UPDATE produit SET categorie = '$categorie' , nom = '$nom', description = '$desc', qte = '$quantite', file_name = '".$fileName."', uploaded_on = '$date' WHERE produit_id = $id ";
+  $querycat = "SELECT id FROM categories WHERE categorie = '$categorie'";
+	$result1 = mysqli_query($conn, $querycat);
+
+	while($row1 = mysqli_fetch_row($result1)){
+
+		$catid = $row1[0];
+	}
+
+  $newcode = $catid.$produit.date("is");
+
+
+$updateq = "UPDATE produit SET categorie = '$categorie' , nom = '$nom', description = '$desc', qte = '$quantite', code = '$newcode', file_name = '".$fileName."', uploaded_on = '$date' WHERE produit_id = $id ";
 
 $result1=mysqli_query($conn,$updateq);
 

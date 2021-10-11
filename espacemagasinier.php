@@ -225,12 +225,9 @@ while($row = mysqli_fetch_array($result)){
           padding-top:  6px;
         } */
         body {
-      background-image:url('.png');
-      background-color: #C0E1BE;
-      background-repeat: repeat;
-      background-size: 10%;
-      
-      backdrop-filter: blur(20px);
+      background-image:url('https://source.unsplash.com/1600x900/?nature,water');
+      background-repeat: no-repeat;
+      backdrop-filter: blur(2px);
       
     }
 
@@ -355,7 +352,7 @@ button:hover {
                         cursor: pointer;
                         margin: 5px;
                         background:url('action1.jpg');background-repeat:no-repeat; background-size:350px 210px;
-                        position:absolute; height:210px; width:350px; left:460px; top:190px;" 
+                        position:absolute; height:210px; width:350px; left:400px; top:160px;" 
                   class="button" onclick="window.location.href = 'nvproduit.php'">
                   <span style="cursor: pointer;
                                 display: inline-block;
@@ -363,7 +360,7 @@ button:hover {
                                 transition: 0.5s;
                                 
                                 color:white; 
-                                "><i class="far fa-plus-square"></i> <b>Ajouter un produit</b></span>
+                                "><img src="add-folder.png" style="width:10%" alt=""/>&nbsp<b style="text-shadow: 2px 2px 5px black;">Ajouter un produit</b></span>
                 
         </button>
         
@@ -380,16 +377,16 @@ button:hover {
                         transition: all 0.5s;
                         cursor: pointer;
                         margin: 5px;
-                        background:url('code_barre.jpg');background-repeat:no-repeat; background-size:350px 250px;
-                        position:absolute; height:210px; width:350px; left:460px; top:500px;" 
-                  class="button" onclick="window.location.href = 'produit.php'">
+                        background:url('stockimg.png');background-repeat:no-repeat; background-size:350px 250px;
+                        position:absolute; height:210px; width:350px; left:400px; top:420px;" 
+                  class="button" onclick="window.location.href = 'gestionproduit.php'">
                   <span style="cursor: pointer;
                                 display: inline-block;
                                 position: relative;
                                 transition: 0.5s;
                                 
                                 color: white;
-                              "><i class="fas fa-qrcode"></i> <b>Gestion des code-barres</b></span>
+                              "><img src="stock.png" style="width:10%" alt=""/> <b style="text-shadow: 2px 2px 5px black;">Gestion de stock</b></span>
                 
         </button>
       <!-- <button class="thirdaction" id="3" style="position:absolute; height:210px; width:200px; left:880px; top:190px; border-radius:10px; background:url('ticket.png'); background-repeat:no-repeat; background-size:200px 209px; border: 4px solid #017115; "></button> -->
@@ -405,14 +402,14 @@ button:hover {
                         cursor: pointer;
                         margin: 5px;
                         background:url('action2.jpg');background-repeat:no-repeat; background-size:350px 210px;
-                        position:absolute; height:210px; width:350px; left:880px; top:190px;" 
+                        position:absolute; height:210px; width:350px; left:810px; top:160px;" 
                   class="button" onclick="window.location.href='genereretiquette.php'">
                   <span style="cursor: pointer;
                                 display: inline-block;
                                 position: relative;
                                 transition: 0.5s;
                                 
-                                color: white"><i class="fas fa-tags"></i> <b>Génerer un etiquette</b></span>
+                                color: white"><img src="price-tag.png" style="width:12%;" alt=""/>&nbsp <b style="text-shadow: 2px 2px 5px black;">Génerer un etiquette</b></span>
                 
         </button>
       
@@ -429,14 +426,14 @@ button:hover {
                         cursor: pointer;
                         margin: 5px;
                         background:url('action4.jpg');background-repeat:no-repeat; background-size:350px 210px;
-                        position:absolute; height:210px; width:350px; left:880px; top:500px;" 
+                        position:absolute; height:210px; width:350px; left:810px; top:420px;" 
                   class="button" onclick="window.location.href='sortie.php'">
         <span style="cursor: pointer;
                                 display: inline-block;
                                 position: relative;
                                 
                                 transition: 0.5s;
-                                color: white"><i class="fas fa-cube"></i> <b>Sortie d'un produit</b></span>
+                                color: white"><img src="checklist.png" style="width:12%;" alt=""/> <b style="text-shadow: 2px 2px 5px black;">Sortie d'un produit</b></span>
                   
                 
         </button>

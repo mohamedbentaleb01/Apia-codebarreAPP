@@ -118,6 +118,26 @@ header( "refresh:2; url=espacemagasinier.php");
 
 }
 
+if($msg == "destroyed"){
+  echo'<div class="alert alert-danger alert-dismissible fade show" style="margin-left: 33%; margin-right:33%;" style role="alert">
+  <strong>Cette session est expirer ! </strong> Veuillez se reconnecter.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div><br>
+  ';
+}
+
+if($msg == "qte"){
+  $id = $_GET['id'];
+  echo'<div class="alert alert-success alert-dismissible fade show" style="margin-left: 33%; margin-right:33%;" style role="alert">
+  <strong>Quantité du produit n°'.$id.' a été modifié avec succés ! </strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div><br>
+</div><br><div align="center"><img src="Preloader_2.gif" align="center" style="" alt=""/></div>
+
+  ';
+  header( "refresh:3; url=gestionproduit.php");
+}
+
 
 
 

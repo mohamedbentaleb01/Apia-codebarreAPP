@@ -24,6 +24,7 @@
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <script src="JsBarcode.all.min.js"></script>
     <title>Liste des produits</title>
@@ -206,7 +207,7 @@
 <body>
 <div class="header-title" style="position:relative;top:90px; font-family:'Titillium Web', sans-serif;"><h2 align="center"><b>Liste des produits :<b></h2></div>
 
-<table class="table table-hover" style="position: absolute; top: 200px; ">
+<table class="table" style="position: absolute; top: 200px; ">
   <thead class="" style="background-color:darkseagreen; color: white;">
   
     
@@ -230,22 +231,23 @@
   </thead>
   <tbody class="" style="background-color: white;">
     <tr>
-      <th scope="row" style="color:green;"><?php echo $row[0]?></th>
-      <td width="30%"><?php $imageURL ='uploads/'.$row[8];?><a href="<?=$imageURL?>"><img style="width:40%; position:relative; margin:5px; border-radius:30px;"alt="" src="<?php echo $imageURL; ?>"/></a></td>
+      <th width="2%" scope="row" style="color:green;"><?php echo $row[0]?></th>
+      <td width="15%"><?php $imageURL ='uploads/'.$row[8];?><a href="<?=$imageURL?>"><img style="width:70%; position:relative; margin:5px; border-radius:30px;"alt="" src="<?php echo $imageURL; ?>"/></a></td>
       <td width="10%" class="text-muted"><b><?php echo $row[1];?></b></td>
       <td width="20%"><b><?php echo $row[2]?><b></td>
-      <td width="10%" class="text-muted"><b style="color:darkseagreen"><?php echo $row[3]?>&nbsp</b>Unités</td>
-      <td width="20%"><svg style="width:150px;" id='<?php echo "barcode".$row[4]?>'></svg></td>
-      <td width="20%" class="text-muted"><?php echo $row[6]?></td>
-        <td>
+      <td width="10%" class="text-muted"><b style="color:darkseagreen"><?php echo $row[3]?>&nbsp</b>Unités
+      
+      </td>
+      <td width="10%"><svg style="width:200px;" id='<?php echo "barcode".$row[4]?>'></svg></td>
+      <td width="15%" class="text-muted"><?php echo $row[6]?></td>
+        <td width="1%">
           <div class="dropdown">
-          <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            
+          <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">   
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" onclick="return editme(<?=$row[0]?>)" href='editproduit.php?id=<?=$row[0]?>' id='<?=$row[0]?>'>Modifier</a></li>
-            <li><a class="dropdown-item" onclick="return deleteme(<?=$row[0]?>)" href='SupprimerProd.php?id=<?=$row[0]?>'>Supprimer</a></li>
-            <li><a class="dropdown-item" href='produit.php?id=<?=$row[0]?>' id='<?=$row[0]?>'>Visualiser</a></li>
+            <li><a class="dropdown-item" onclick="return editme(<?=$row[0]?>)" href='editproduit.php?id=<?=$row[0]?>' id='<?=$row[0]?>' style="text-transform: lowercase;">&nbsp;Modifier</a></li>
+            <li><a class="dropdown-item" onclick="return deleteme(<?=$row[0]?>)" href='SupprimerProd.php?id=<?=$row[0]?>' style="text-transform: lowercase;">Supprimer</a></li>
+            <li><a class="dropdown-item" href='produit.php?id=<?=$row[0]?>' id='<?=$row[0]?>' style="text-transform: lowercase;">Visualiser</a></li>
           </ul>
         </div>
      </td>
