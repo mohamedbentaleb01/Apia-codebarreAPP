@@ -327,7 +327,7 @@
       lineColor: "#000",
       width: 2,
       height: 30,
-      displayValue: true
+      displayValue: true,
       }
     );
   }
